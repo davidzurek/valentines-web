@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A fun Valentine's Day proposal website with interactive buttons and celebrations."
+    />
+    <meta name="author" content="Valentine's Day Project" />
+    <title>Will You Be My Valentine? 💕</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Main Content -->
+    <main>
+      <h1 class="main-heading">Will You Be My Valentine? 💕</h1>
+
+      <div class="button-container">
+        <button
+          id="yesButton"
+          class="btn btn--yes"
+          aria-label="Accept Valentine's proposal"
+        >
+          YES
+        </button>
+        <button
+          id="noButton"
+          class="btn btn--no"
+          aria-label="Decline Valentine's proposal"
+        >
+          NO
+        </button>
+      </div>
+    </main>
+
+    <!-- Modal for Yes Response -->
+    <aside
+      id="modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="modalText"
+      aria-modal="true"
+    >
+      <div class="modal__content">
+        <h2 id="modalText" class="modal__text"></h2>
+        <button
+          class="modal__button"
+          onclick="closeModal()"
+          aria-label="Close modal"
+        >
+          Yay! 🎉
+        </button>
+      </div>
+    </aside>
+
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop aria-hidden="true">
+      <source
+        src="cheesy_romance_(full_version)-alex_khaskin.mp3"
+        type="audio/mpeg"
+      />
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- External Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
