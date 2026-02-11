@@ -260,6 +260,9 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   animation: fadeInPulse 2s ease-in-out infinite;
+  text-align: center;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 @keyframes fadeInPulse {
@@ -270,6 +273,25 @@ body {
   50% {
     opacity: 1;
   }
+}
+
+/* Subtle Hint */
+.subtle-hint {
+  position: fixed;
+  top: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: #d63384;
+  text-align: center;
+  font-style: italic;
+  z-index: 1000;
+  margin: 0;
+  max-width: 90%;
+}
+
+.subtle-hint .emoji {
+  font-style: normal;
 }
 
 /* Responsive Design */
@@ -304,8 +326,14 @@ body {
   }
 
   .audio-hint {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     padding: 0.5rem 1rem;
+    top: 0.5rem;
+  }
+
+  .subtle-hint {
+    font-size: 0.75rem;
+    top: 6rem;
   }
 }
 
@@ -325,7 +353,37 @@ body {
   }
 
   .audio-hint {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     padding: 0.4rem 0.8rem;
+    top: 0.5rem;
+  }
+
+  .subtle-hint {
+    font-size: 0.65rem;
+    top: 5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .audio-hint {
+    font-size: 0.52rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .subtle-hint {
+    font-size: 0.57rem;
+    top: 2.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .audio-hint {
+    font-size: 0.48rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .subtle-hint {
+    font-size: 0.53rem;
+    top: 2.5rem;
   }
 }
