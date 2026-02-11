@@ -2,6 +2,57 @@
    Valentine's Day Website Styles
    =========================================== */
 
+/* CSS Custom Properties */
+:root {
+  /* Colors */
+  --color-primary: #d63384;
+  --color-success: #28a745;
+  --color-success-hover: #218838;
+  --color-danger: #dc3545;
+  --color-danger-hover: #c82333;
+  --color-white: #ffffff;
+  --color-text-light: rgba(214, 51, 132, 0.6);
+  
+  /* Gradients */
+  --gradient-background: linear-gradient(135deg, #ffc0cb 0%, #ffb3d9 50%, #ff99cc 100%);
+  --gradient-modal: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Font Sizes */
+  --font-size-xl: 3rem;
+  --font-size-lg: 2rem;
+  --font-size-md: 1.5rem;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.9rem;
+  
+  /* Transitions */
+  --transition-base: all 0.3s ease;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.4);
+  --shadow-hint: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  /* Border Radius */
+  --radius-sm: 10px;
+  --radius-md: 15px;
+  --radius-lg: 20px;
+  --radius-pill: 25px;
+  --radius-circle: 50%;
+  
+  /* Z-Index */
+  --z-low: 100;
+  --z-high: 1000;
+  --z-modal: 2000;
+}
+
 /* Base Styles */
 * {
   margin: 0;
@@ -11,7 +62,7 @@
 
 body {
   font-family: "Arial", sans-serif;
-  background: linear-gradient(135deg, #ffc0cb 0%, #ffb3d9 50%, #ff99cc 100%);
+  background: var(--gradient-background);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,10 +74,10 @@ body {
 
 /* Typography */
 .main-heading {
-  font-size: 3rem;
-  color: #d63384;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--spacing-xl);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   font-weight: bold;
 }
@@ -34,37 +85,37 @@ body {
 /* Button Container */
 .button-container {
   display: flex;
-  gap: 2rem;
+  gap: var(--spacing-lg);
   align-items: center;
   justify-content: center;
 }
 
 /* Button Styles */
 .btn {
-  padding: 1.5rem 3rem;
-  font-size: 2rem;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-lg);
   font-weight: bold;
   border: none;
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  color: white;
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-md);
+  color: var(--color-white);
   text-transform: uppercase;
 }
 
 .btn--yes {
-  background-color: #28a745;
+  background-color: var(--color-success);
 }
 
 .btn--yes:hover {
-  background-color: #218838;
+  background-color: var(--color-success-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn--no {
-  background-color: #dc3545;
+  background-color: var(--color-danger);
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -72,9 +123,9 @@ body {
 }
 
 .btn--no:hover {
-  background-color: #c82333;
+  background-color: var(--color-danger-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Animations */
@@ -110,7 +161,7 @@ body {
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   bottom: -150px;
   animation: float 6s ease-in-out forwards;
-  z-index: 1000;
+  z-index: var(--z-high);
 }
 
 .balloon::before {
@@ -137,10 +188,10 @@ body {
 /* Roses */
 .rose {
   position: fixed;
-  font-size: 2rem;
+  font-size: var(--font-size-lg);
   top: -50px;
   animation: fall 4s linear forwards;
-  z-index: 1000;
+  z-index: var(--z-high);
   transform: rotate(45deg);
 }
 
@@ -159,7 +210,7 @@ body {
 .modal {
   display: none;
   position: fixed;
-  z-index: 2000;
+  z-index: var(--z-modal);
   left: 0;
   top: 0;
   width: 100%;
@@ -174,9 +225,9 @@ body {
 }
 
 .modal__content {
-  background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
-  padding: 3rem;
-  border-radius: 20px;
+  background: var(--gradient-modal);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
   text-align: center;
   max-width: 500px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -195,22 +246,22 @@ body {
 }
 
 .modal__text {
-  color: white;
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-lg);
   line-height: 1.4;
 }
 
 .modal__button {
-  background-color: white;
+  background-color: var(--color-white);
   color: #ff6b9d;
-  padding: 1rem 2rem;
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: 1.2rem;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: var(--transition-base);
 }
 
 .modal__button:hover {
@@ -221,20 +272,20 @@ body {
 /* GitHub Link */
 .github-link {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  color: rgba(214, 51, 132, 0.6);
-  transition: all 0.3s ease;
-  z-index: 100;
-  padding: 0.5rem;
-  border-radius: 50%;
+  bottom: var(--spacing-sm);
+  right: var(--spacing-sm);
+  color: var(--color-text-light);
+  transition: var(--transition-base);
+  z-index: var(--z-low);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .github-link:hover {
-  color: #d63384;
+  color: var(--color-primary);
   transform: scale(1.1);
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -248,17 +299,17 @@ body {
 /* Audio Hint */
 .audio-hint {
   position: fixed;
-  top: 1rem;
+  top: var(--spacing-sm);
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(255, 255, 255, 0.95);
-  color: #d63384;
+  color: var(--color-primary);
   padding: 0.6rem 1.5rem;
-  border-radius: 25px;
+  border-radius: var(--radius-pill);
   font-size: 0.95rem;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  box-shadow: var(--shadow-hint);
+  z-index: var(--z-high);
   animation: fadeInPulse 2s ease-in-out infinite;
   text-align: center;
   white-space: nowrap;
@@ -278,14 +329,14 @@ body {
 /* Subtle Hint */
 .subtle-hint {
   position: fixed;
-  top: 6rem;
+  top: 4rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.9rem;
-  color: #d63384;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
   text-align: center;
   font-style: italic;
-  z-index: 1000;
+  z-index: var(--z-high);
   margin: 0;
   max-width: 90%;
 }
@@ -297,27 +348,27 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-heading {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
   }
 
   .button-container {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--spacing-md);
   }
 
   .btn {
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-md);
   }
 
   .modal__content {
-    padding: 2rem;
-    margin: 1rem;
+    padding: var(--spacing-lg);
+    margin: var(--spacing-sm);
   }
 
   .modal__text {
-    font-size: 1.5rem;
+    font-size: var(--font-size-md);
   }
 
   .github-link svg {
@@ -328,18 +379,18 @@ body {
   .audio-hint {
     font-size: 0.75rem;
     padding: 0.5rem 1rem;
-    top: 0.5rem;
+    top: var(--spacing-xs);
   }
 
   .subtle-hint {
     font-size: 0.75rem;
-    top: 6rem;
+    top: 3.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .main-heading {
-    font-size: 1.5rem;
+    font-size: var(--font-size-md);
   }
 
   .btn {
@@ -355,12 +406,12 @@ body {
   .audio-hint {
     font-size: 0.6rem;
     padding: 0.4rem 0.8rem;
-    top: 0.5rem;
+    top: var(--spacing-xs);
   }
 
   .subtle-hint {
     font-size: 0.65rem;
-    top: 5rem;
+    top: 3rem;
   }
 }
 
@@ -372,7 +423,7 @@ body {
 
   .subtle-hint {
     font-size: 0.57rem;
-    top: 2.5rem;
+    top: 2.8rem;
   }
 }
 
@@ -384,6 +435,6 @@ body {
 
   .subtle-hint {
     font-size: 0.53rem;
-    top: 2.5rem;
+    top: 2.6rem;
   }
 }

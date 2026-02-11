@@ -16,15 +16,21 @@ A fun, interactive Valentine's Day proposal website with animated buttons, confe
   - Background music playback
   - Modal popup with random acceptance message
 
-## 📁 Files
+## 📁 Project Structure
 
 ```
 valentines/
-├── index.html                        # Website
-├── styles.css                        # Styles
-├── script.js                         # Interactivity
-├── favicon.svg                       # Icon
-├── audio/                            # Music
+├── assets/                           # Static assets
+│   ├── audio/                        # Audio files
+│   ├── icons/                        # Icons (favicon)
+│   └── images/                       # Future images
+├── css/                              # Stylesheets
+│   └── styles.css
+├── js/                               # JavaScript
+│   └── script.js
+├── index.html                        # Main HTML file
+├── package.json                      # Project metadata
+├── .editorconfig                     # Code style config
 ├── Dockerfile                        # Container image
 ├── deploy.sh                         # Deploy to GCP
 └── README.md                         # This file
@@ -38,7 +44,11 @@ valentines/
 # Option 1: Just open the file
 open index.html
 
-# Option 2: Use a simple server
+# Option 2: Use npm script
+npm run dev
+# Then visit: http://localhost:8000
+
+# Option 3: Use a simple server directly
 npx http-server -p 8000
 # Then visit: http://localhost:8000
 ```

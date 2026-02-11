@@ -14,6 +14,13 @@ const CONFIG = {
   confettiDuration: 5000,
   balloonRemovalDelay: 8000,
   roseRemovalDelay: 6000,
+  animationDurations: {
+    shake: 500,
+    balloonFloat: { min: 4, max: 7 },
+    roseFall: { min: 3, max: 5 },
+    balloonDelay: { min: 0, max: 2 },
+    roseDelay: { min: 0, max: 1 },
+  },
 };
 
 const COLORS = {
@@ -105,31 +112,24 @@ function getRandomNumber(min, max) {
  * Stop all currently playing audio
  */
 function stopAllAudio() {
+  const { backgroundMusic, ...carltonAudios } = elements;
+
   // Stop background music
-  elements.backgroundMusic.pause();
-  elements.backgroundMusic.currentTime = 0;
+  backgroundMusic?.pause();
+  if (backgroundMusic) backgroundMusic.currentTime = 0;
 
   // Stop all Carlton audio files
-  const carltonAudios = [
-    elements.carltonIntro1,
-    elements.carltonIntro2,
-    elements.carltonINeedYou,
-    elements.carltonIMissYou,
-    elements.carltonIWonder,
-    elements.carltonRefrain,
-  ];
-
-  carltonAudios.forEach((audio) => {
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-  });
+  Object.values(carltonAudios)
+    .filter((el) => el?.tagName === "AUDIO")
+    .forEach((audio) => {
+      audio?.pause();
+      if (audio) audio.currentTime = 0;
+    });
 }
 
 /**
  * Play Carlton audio based on click count
- * Cycles every 9 clicks starting from click 10
+ * Cycles every 12 clicks
  */
 function playCarltonAudio(clickCount) {
   // Normalize click count to cycle every 12 clicks
@@ -148,11 +148,9 @@ function playCarltonAudio(clickCount) {
   // Play the audio if there's one for this click count
   const audio = audioMap[normalizedCount];
   if (audio) {
-    // Stop all currently playing audio
     stopAllAudio();
-
     audio.play().catch((error) => {
-      console.log("Audio playback prevented:", error);
+      console.warn("Audio playback prevented:", error.message);
     });
   }
 }
@@ -166,24 +164,25 @@ function playCarltonAudio(clickCount) {
  */
 function celebrateWithConfetti() {
   const end = Date.now() + CONFIG.confettiDuration;
+  const confettiConfig = {
+    particleCount: 7,
+    spread: 55,
+    colors: COLORS.confetti,
+  };
 
   (function frame() {
     // Left side confetti
     confetti({
-      particleCount: 7,
+      ...confettiConfig,
       angle: 60,
-      spread: 55,
       origin: { x: 0 },
-      colors: COLORS.confetti,
     });
 
     // Right side confetti
     confetti({
-      particleCount: 7,
+      ...confettiConfig,
       angle: 120,
-      spread: 55,
       origin: { x: 1 },
-      colors: COLORS.confetti,
     });
 
     if (Date.now() < end) {
@@ -196,21 +195,23 @@ function celebrateWithConfetti() {
  * Create floating balloons
  */
 function createBalloons() {
-  for (let i = 0; i < CONFIG.balloonCount; i++) {
+  const { balloonCount, balloonRemovalDelay, animationDurations } = CONFIG;
+
+  for (let i = 0; i < balloonCount; i++) {
     setTimeout(() => {
       const balloon = document.createElement("div");
       balloon.className = "balloon";
-      balloon.style.left = `${Math.random() * 100}%`;
-      balloon.style.backgroundColor = getRandomItem(COLORS.balloons);
-      balloon.style.animationDuration = `${getRandomNumber(4, 7)}s`;
-      balloon.style.animationDelay = `${getRandomNumber(0, 2)}s`;
+      balloon.style.cssText = `
+        left: ${Math.random() * 100}%;
+        background-color: ${getRandomItem(COLORS.balloons)};
+        animation-duration: ${getRandomNumber(animationDurations.balloonFloat.min, animationDurations.balloonFloat.max)}s;
+        animation-delay: ${getRandomNumber(animationDurations.balloonDelay.min, animationDurations.balloonDelay.max)}s;
+      `;
 
       document.body.appendChild(balloon);
 
       // Remove balloon after animation
-      setTimeout(() => {
-        balloon.remove();
-      }, CONFIG.balloonRemovalDelay);
+      setTimeout(() => balloon.remove(), balloonRemovalDelay);
     }, i * 200);
   }
 }
@@ -219,21 +220,23 @@ function createBalloons() {
  * Create falling roses
  */
 function createRoses() {
-  for (let i = 0; i < CONFIG.roseCount; i++) {
+  const { roseCount, roseRemovalDelay, animationDurations } = CONFIG;
+
+  for (let i = 0; i < roseCount; i++) {
     setTimeout(() => {
       const rose = document.createElement("div");
       rose.className = "rose";
       rose.textContent = "🌹";
-      rose.style.left = `${Math.random() * 100}%`;
-      rose.style.animationDuration = `${getRandomNumber(3, 5)}s`;
-      rose.style.animationDelay = `${getRandomNumber(0, 1)}s`;
+      rose.style.cssText = `
+        left: ${Math.random() * 100}%;
+        animation-duration: ${getRandomNumber(animationDurations.roseFall.min, animationDurations.roseFall.max)}s;
+        animation-delay: ${getRandomNumber(animationDurations.roseDelay.min, animationDurations.roseDelay.max)}s;
+      `;
 
       document.body.appendChild(rose);
 
       // Remove rose after animation
-      setTimeout(() => {
-        rose.remove();
-      }, CONFIG.roseRemovalDelay);
+      setTimeout(() => rose.remove(), roseRemovalDelay);
     }, i * 100);
   }
 }
@@ -245,7 +248,7 @@ function shakeYesButton() {
   elements.yesButton.classList.add("shake");
   setTimeout(() => {
     elements.yesButton.classList.remove("shake");
-  }, 500);
+  }, CONFIG.animationDurations.shake);
 }
 
 // ========================================
@@ -271,16 +274,18 @@ function handleNoButtonClick() {
 
   // Change no button text randomly
   const randomText = getRandomItem(NO_BUTTON_TEXTS);
+  Object.assign(elements.noButton.style, {
+    fontSize: "1.1rem",
+    padding: "1rem 1.5rem",
+    textTransform: "none",
+    whiteSpace: "normal",
+    wordWrap: "break-word",
+    lineHeight: "1.5",
+    width: "350px",
+    maxWidth: "400px",
+    height: "auto",
+  });
   elements.noButton.textContent = randomText;
-  elements.noButton.style.fontSize = "1.1rem";
-  elements.noButton.style.padding = "1rem 1.5rem";
-  elements.noButton.style.textTransform = "none";
-  elements.noButton.style.whiteSpace = "normal";
-  elements.noButton.style.wordWrap = "break-word";
-  elements.noButton.style.lineHeight = "1.5";
-  elements.noButton.style.width = "350px";
-  elements.noButton.style.maxWidth = "400px";
-  elements.noButton.style.height = "auto";
 }
 
 /**
@@ -294,8 +299,8 @@ function handleYesButtonClick() {
 
   // Stop all audio and play background music
   stopAllAudio();
-  elements.backgroundMusic.play().catch((error) => {
-    console.log("Audio autoplay prevented:", error);
+  elements.backgroundMusic?.play().catch((error) => {
+    console.warn("Audio autoplay prevented:", error.message);
   });
 
   // Show modal with random text
@@ -307,9 +312,9 @@ function handleYesButtonClick() {
 /**
  * Close the modal
  */
-function closeModal() {
-  elements.modal.classList.remove("active");
-}
+const closeModal = () => {
+  elements.modal?.classList.remove("active");
+};
 
 // ========================================
 // Initialization
@@ -320,21 +325,27 @@ function closeModal() {
  */
 function init() {
   // Cache DOM elements
-  elements.yesButton = document.getElementById("yesButton");
-  elements.noButton = document.getElementById("noButton");
-  elements.modal = document.getElementById("modal");
-  elements.modalText = document.getElementById("modalText");
-  elements.backgroundMusic = document.getElementById("backgroundMusic");
-  elements.carltonIntro1 = document.getElementById("carltonIntro1");
-  elements.carltonIntro2 = document.getElementById("carltonIntro2");
-  elements.carltonINeedYou = document.getElementById("carltonINeedYou");
-  elements.carltonIMissYou = document.getElementById("carltonIMissYou");
-  elements.carltonIWonder = document.getElementById("carltonIWonder");
-  elements.carltonRefrain = document.getElementById("carltonRefrain");
+  const elementIds = [
+    "yesButton",
+    "noButton",
+    "modal",
+    "modalText",
+    "backgroundMusic",
+    "carltonIntro1",
+    "carltonIntro2",
+    "carltonINeedYou",
+    "carltonIMissYou",
+    "carltonIWonder",
+    "carltonRefrain",
+  ];
+
+  elementIds.forEach((id) => {
+    elements[id] = document.getElementById(id);
+  });
 
   // Attach event listeners
-  elements.yesButton.addEventListener("click", handleYesButtonClick);
-  elements.noButton.addEventListener("click", handleNoButtonClick);
+  elements.yesButton?.addEventListener("click", handleYesButtonClick);
+  elements.noButton?.addEventListener("click", handleNoButtonClick);
 
   // Make closeModal function globally accessible for inline handler
   window.closeModal = closeModal;

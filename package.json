@@ -1,0 +1,26 @@
+{
+  "name": "valentines-web",
+  "version": "1.0.0",
+  "description": "Interactive Valentine's Day proposal website with animated buttons, confetti, and celebrations",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 8000",
+    "start": "npx http-server -p 8000",
+    "deploy": "./deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidzurek/valentines-web"
+  },
+  "keywords": [
+    "valentines",
+    "interactive",
+    "animation",
+    "confetti",
+    "proposal"
+  ],
+  "author": "dz",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

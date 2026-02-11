@@ -3,12 +3,11 @@
 
 FROM nginx:1.25-alpine
 
-# Copy static files
+# Copy static files with new directory structure
 COPY index.html /usr/share/nginx/html/
-COPY styles.css /usr/share/nginx/html/
-COPY script.js /usr/share/nginx/html/
-COPY favicon.svg /usr/share/nginx/html/
-COPY audio/ /usr/share/nginx/html/audio/
+COPY css/ /usr/share/nginx/html/css/
+COPY js/ /usr/share/nginx/html/js/
+COPY assets/ /usr/share/nginx/html/assets/
 
 # Simple nginx config for Cloud Run (port 8080)
 RUN echo 'server { \
