@@ -245,6 +245,33 @@ body {
   height: 2.5rem;
 }
 
+/* Audio Hint */
+.audio-hint {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #d63384;
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: fadeInPulse 2s ease-in-out infinite;
+}
+
+@keyframes fadeInPulse {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-heading {
@@ -275,6 +302,11 @@ body {
     width: 2rem;
     height: 2rem;
   }
+
+  .audio-hint {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -290,5 +322,10 @@ body {
   .github-link svg {
     width: 1.5rem;
     height: 1.5rem;
+  }
+
+  .audio-hint {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
   }
 }
