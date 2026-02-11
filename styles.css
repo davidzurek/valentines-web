@@ -218,6 +218,33 @@ body {
   transform: scale(1.05);
 }
 
+/* GitHub Link */
+.github-link {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  color: rgba(214, 51, 132, 0.6);
+  transition: all 0.3s ease;
+  z-index: 100;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-link:hover {
+  color: #d63384;
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.github-link svg {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-heading {
@@ -243,6 +270,11 @@ body {
   .modal__text {
     font-size: 1.5rem;
   }
+
+  .github-link svg {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -253,5 +285,10 @@ body {
   .btn {
     padding: 0.75rem 1.5rem;
     font-size: 1.2rem;
+  }
+
+  .github-link svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
