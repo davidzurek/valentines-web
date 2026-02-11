@@ -71,6 +71,12 @@ const elements = {
   modal: null,
   modalText: null,
   backgroundMusic: null,
+  carltonIntro1: null,
+  carltonIntro2: null,
+  carltonINeedYou: null,
+  carltonIMissYou: null,
+  carltonIWonder: null,
+  carltonRefrain: null,
 };
 
 // ========================================
@@ -89,6 +95,66 @@ function getRandomItem(array) {
  */
 function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+// ========================================
+// Audio Functions
+// ========================================
+
+/**
+ * Stop all currently playing audio
+ */
+function stopAllAudio() {
+  // Stop background music
+  elements.backgroundMusic.pause();
+  elements.backgroundMusic.currentTime = 0;
+
+  // Stop all Carlton audio files
+  const carltonAudios = [
+    elements.carltonIntro1,
+    elements.carltonIntro2,
+    elements.carltonINeedYou,
+    elements.carltonIMissYou,
+    elements.carltonIWonder,
+    elements.carltonRefrain,
+  ];
+
+  carltonAudios.forEach((audio) => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  });
+}
+
+/**
+ * Play Carlton audio based on click count
+ * Cycles every 9 clicks starting from click 10
+ */
+function playCarltonAudio(clickCount) {
+  // Normalize click count to cycle every 12 clicks
+  const normalizedCount = ((clickCount - 1) % 12) + 1;
+
+  // Map of click positions to audio elements
+  const audioMap = {
+    1: elements.carltonIntro1,
+    3: elements.carltonIntro2,
+    4: elements.carltonINeedYou,
+    5: elements.carltonIMissYou,
+    6: elements.carltonIWonder,
+    7: elements.carltonRefrain,
+  };
+
+  // Play the audio if there's one for this click count
+  const audio = audioMap[normalizedCount];
+  if (audio) {
+    // Stop all currently playing audio
+    stopAllAudio();
+
+    audio.play().catch((error) => {
+      console.log("Audio playback prevented:", error);
+    });
+  }
 }
 
 // ========================================
@@ -190,6 +256,12 @@ function shakeYesButton() {
  * Handle "No" button click
  */
 function handleNoButtonClick() {
+  // Increment click count first
+  state.noClickCount++;
+
+  // Play Carlton audio based on click count
+  playCarltonAudio(state.noClickCount);
+
   // Increase yes button size
   state.yesButtonScale += CONFIG.yesButtonScaleIncrement;
   elements.yesButton.style.transform = `scale(${state.yesButtonScale})`;
@@ -209,8 +281,6 @@ function handleNoButtonClick() {
   elements.noButton.style.width = "350px";
   elements.noButton.style.maxWidth = "400px";
   elements.noButton.style.height = "auto";
-
-  state.noClickCount++;
 }
 
 /**
@@ -222,7 +292,8 @@ function handleYesButtonClick() {
   createBalloons();
   createRoses();
 
-  // Play background music
+  // Stop all audio and play background music
+  stopAllAudio();
   elements.backgroundMusic.play().catch((error) => {
     console.log("Audio autoplay prevented:", error);
   });
@@ -254,6 +325,12 @@ function init() {
   elements.modal = document.getElementById("modal");
   elements.modalText = document.getElementById("modalText");
   elements.backgroundMusic = document.getElementById("backgroundMusic");
+  elements.carltonIntro1 = document.getElementById("carltonIntro1");
+  elements.carltonIntro2 = document.getElementById("carltonIntro2");
+  elements.carltonINeedYou = document.getElementById("carltonINeedYou");
+  elements.carltonIMissYou = document.getElementById("carltonIMissYou");
+  elements.carltonIWonder = document.getElementById("carltonIWonder");
+  elements.carltonRefrain = document.getElementById("carltonRefrain");
 
   // Attach event listeners
   elements.yesButton.addEventListener("click", handleYesButtonClick);

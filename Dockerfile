@@ -8,7 +8,7 @@ COPY index.html /usr/share/nginx/html/
 COPY styles.css /usr/share/nginx/html/
 COPY script.js /usr/share/nginx/html/
 COPY favicon.svg /usr/share/nginx/html/
-COPY cheesy_romance_\(full_version\)-alex_khaskin.mp3 /usr/share/nginx/html/
+COPY audio/ /usr/share/nginx/html/audio/
 
 # Simple nginx config for Cloud Run (port 8080)
 RUN echo 'server { \

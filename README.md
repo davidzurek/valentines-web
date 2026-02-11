@@ -20,14 +20,14 @@ A fun, interactive Valentine's Day proposal website with animated buttons, confe
 
 ```
 valentines/
-├── index.html           # Website
-├── styles.css           # Styles
-├── script.js            # Interactivity
-├── favicon.svg          # Icon
-├── cheesy_romance_*.mp3 # Music
-├── Dockerfile           # Container image
-├── deploy.sh            # Deploy to GCP
-└── README.md            # This file
+├── index.html                        # Website
+├── styles.css                        # Styles
+├── script.js                         # Interactivity
+├── favicon.svg                       # Icon
+├── audio/                            # Music
+├── Dockerfile                        # Container image
+├── deploy.sh                         # Deploy to GCP
+└── README.md                         # This file
 ```
 
 ## 🚀 Quick Start
